@@ -1,4 +1,5 @@
 import string
+from scapy.all import IP, ICMP, send
 
 def caesar():
     word = input('Ingrese la palabra a cifrar: ')
@@ -21,4 +22,18 @@ def caesar():
             caesrMsg += newChar
     return caesrMsg
 
-caesar()
+def send_icmp_packets(message, target_ip):
+    for char in message:
+        icmp_packet = IP(dst=target_ip)/ICMP()/(char.encode())
+        send(icmp_packet)
+        print(f"Paquete ICMP enviado con carga útil: {char}")
+
+if __name__ == "__main__":
+    # Cifrar el mensaje
+    encrypted_message = caesar()
+    
+    # Dirección IP del servidor DNS al que quieres enviar los paquetes (Google DNS)
+    target_ip = "8.8.8.8"
+    
+    # Enviar los paquetes ICMP
+    send_icmp_packets(encrypted_message, target_ip)
