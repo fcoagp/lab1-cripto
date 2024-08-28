@@ -1,6 +1,8 @@
 import string
 
-def caesar(word, desp):
+def caesar():
+    word = input('Ingrese la palabra a cifrar: ')
+    desp = int(input('Ingrese el desplazamiento: ')) 
     caesrMsg = ''
     for w in word:
         if w in string.ascii_lowercase:
@@ -19,9 +21,6 @@ def caesar(word, desp):
             caesrMsg += newChar
     print(caesrMsg)
 
-newWord = input('Ingrese la palabra a cifrar: ')
-newDesp = int(input('Ingrese el desplazamiento: ')) 
-caesar(newWord,newDesp)
 
-
+caesar()
 
