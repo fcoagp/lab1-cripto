@@ -36,4 +36,4 @@ if __name__ == "__main__":
     target_ip = "8.8.8.8"
     
     # Enviar los paquetes ICMP
-    send_icmp_packets(encrypted_message, target_ip)
+    send_icmp_packets(encrypted_message, target_ip) 
