@@ -20,5 +20,3 @@ def caesar():
             newChar = chr(ord(w) + desp)
             caesrMsg += newChar
     return caesrMsg
-
-caesar()
