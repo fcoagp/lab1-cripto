@@ -1,5 +1,8 @@
+from scapy.all import IP, ICMP, send, Raw
+import random
+import time
 import string
-from scapy.all import IP, ICMP, send
+import struct
 
 def caesar():
     word = input('Ingrese la palabra a cifrar: ')
@@ -23,10 +26,21 @@ def caesar():
     return caesrMsg
 
 def send_icmp_packets(message, target_ip):
-    for char in message:
-        icmp_packet = IP(dst=target_ip)/ICMP()/(char.encode())
+    id_base = random.randint(0, 65535)
+    seq_base = random.randint(0, 65535)
+    
+    for i, char in enumerate(message):
+        # Construir la carga útil personalizada
+        icmp_payload = struct.pack('!d', time.time()) + (b'\x00' * 6) + char.encode() + (b'\x00' * (56 - len(char.encode())))
+
+        # Crear el paquete ICMP
+        icmp_packet = IP(dst=target_ip)/ICMP(
+            id=id_base,  # ID coherente
+            seq=seq_base + i  # Número de secuencia coherente
+        )/Raw(load=icmp_payload)
+        
         send(icmp_packet)
-        print(f"Paquete ICMP enviado con carga útil: {char}")
+        print(f"Paquete ICMP enviado con carga útil: {char}, Seq: {seq_base + i}, ID: {id_base}")
 
 if __name__ == "__main__":
     # Cifrar el mensaje
@@ -36,4 +50,4 @@ if __name__ == "__main__":
     target_ip = "8.8.8.8"
     
     # Enviar los paquetes ICMP
-    send_icmp_packets(encrypted_message, target_ip) 
+    send_icmp_packets(encrypted_message, target_ip)
