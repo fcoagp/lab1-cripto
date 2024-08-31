@@ -12,7 +12,6 @@ LETTER_FREQUENCIES = {
     't': 4.60, 'u': 4.55, 'v': 1.05, 'w': 0.04, 'x': 0.14,
     'y': 1.09, 'z': 0.47
 }
-
 # Frecuencia de aparición de pares de letras en español
 LETTER_PAIR_FREQUENCIES = defaultdict(lambda: 0.01, {
     'qu': 1.0, 'el': 0.98, 'la': 0.95, 'de': 0.93, 'en': 0.90,
@@ -52,16 +51,9 @@ def score_message(message):
         pair = message[i:i + 2]
         if pair in LETTER_PAIR_FREQUENCIES:
             letter_score += LETTER_PAIR_FREQUENCIES[pair]
-    
-    # Aumentar el puntaje si el mensaje contiene palabras comunes o patrones
-    common_words = ['hola', 'adios', 'numero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez']
-    for word in common_words:
-        if word in message:
-            letter_score += 50.0
-    
+
     # Combinar puntajes
     total_score = letter_score + number_score
-    
     return total_score
 
 def find_most_probable_message(ciphertext):
@@ -102,5 +94,5 @@ def main(pcap_file):
             print(f"{shift:2d} {message}")
 
 if __name__ == "__main__":
-    pcap_file = './medicion1.pcapng'
+    pcap_file = './ejemplo2.pcapng'
     main(pcap_file)
