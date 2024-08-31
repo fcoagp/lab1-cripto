@@ -20,3 +20,6 @@ def caesar():
             newChar = chr(ord(w) + desp)
             caesrMsg += newChar
     return caesrMsg
+
+if __name__ == '__main__': 
+    print(caesar())
